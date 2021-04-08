@@ -1,3 +1,3 @@
 <template>
-  <router-view />
+  <h1>Credentials</h1>
 </template>
