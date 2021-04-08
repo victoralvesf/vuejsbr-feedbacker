@@ -65,7 +65,7 @@ export default {}
   .header-group {
     background-image: url(../../assets/images/blue_balloons.png);
     background-size: 628px;
-    background-position: 90% 100%;
+    background-position: 120% 100%;
     background-repeat: no-repeat;
   }
 }
