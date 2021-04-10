@@ -1,7 +1,7 @@
 import axios from 'axios'
 import authService from './auth'
 import userService from './user'
-
+import { setGlobalLoading } from '../store/global'
 import router from '../router'
 
 const API_ENVS = {
@@ -13,6 +13,8 @@ const httpClient = axios.create({
 })
 
 httpClient.interceptors.request.use(config => {
+  setGlobalLoading(true)
+
   const token = window.localStorage.getItem('token')
 
   if (token) {
@@ -22,16 +24,23 @@ httpClient.interceptors.request.use(config => {
   return config
 })
 
-httpClient.interceptors.response.use((response) => response, (error) => {
+httpClient.interceptors.response.use((response) => {
+  setGlobalLoading(false)
+  return response
+}, (error) => {
   const canThrowAnError = error.request.status === 0 ||
     error.request.status === 500
 
-  if (canThrowAnError) throw new Error(error.message)
+  if (canThrowAnError) {
+    setGlobalLoading(false)
+    throw new Error(error.message)
+  }
 
   if (error.response.status === 401) {
     router.push({ name: 'Home' })
   }
 
+  setGlobalLoading(false)
   return error
 })
 
