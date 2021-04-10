@@ -10,6 +10,13 @@ import 'vue-toastification/dist/index.css'
 
 const app = createApp(App)
 
+const toastOptions = {
+  position: POSITION.TOP_RIGHT,
+  closeOnClick: true,
+  pauseOnHover: true,
+  timeout: 3500
+}
+
 app.use(router)
-app.use(Toast, { position: POSITION.TOP_CENTER })
+app.use(Toast, toastOptions)
 app.mount('#app')
