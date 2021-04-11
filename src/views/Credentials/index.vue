@@ -52,15 +52,13 @@
         v-if="store.global.isLoading || state.isLoading"
         class="rounded bg-brand-gray"
         width="75%"
-        height="168px"
+        height="130px"
       />
 
       <div v-else class="script-field">
         <span v-if="state.hasError">Erro ao carregar o script</span>
         <pre v-else class="text-brand-main w-7/8 overflow-x-auto">
-&lt;script
-  defer
-  async
+&lt;script defer async
   onload="init('{{ store.user.currentUser.apiKey }}')"
   src="{{ state.scriptUrl }}"
 &gt;&lt;/script&gt;</pre>

@@ -13,6 +13,7 @@
 
 <script>
 import { computed } from 'vue'
+
 export default {
   props: {
     maxWidth: {
@@ -39,7 +40,7 @@ export default {
   setup (props) {
     const computedWidth = computed(() => {
       const value = Math.random() * (props.width - props.minWidth)
-      return props.width ?? Math.floor(value + props.minWidth) + '%'
+      return props.width ?? `${Math.floor(value + props.minWidth)}%`
     })
 
     return {
@@ -60,7 +61,7 @@ export default {
   position: relative;
   vertical-align: middle;
   overflow: hidden;
-  background-color: #f6f7f8;
+  background: #f6f7f8;
   margin-top: 7px;
 }
 
@@ -74,6 +75,6 @@ export default {
   background-image: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
   background-position: 0 0;
   background-size: 1000 100;
-  animation: shimmer inifinite alternate ease-in-out;
+  animation: shimmer infinite alternate ease-in-out;
 }
 </style>
