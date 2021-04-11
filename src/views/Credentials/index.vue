@@ -11,21 +11,22 @@
         Instalação e configuração
       </h3>
       <p class="mt-10 text-lg text-gray-800 font-regular">
-        Este aqui é a sua chave de api
+        Esta é a sua chave de api:
       </p>
 
       <content-loader
         v-if="store.global.isLoading || state.isLoading"
         class="rounded bg-brand-gray"
-        width="600px"
+        width="75%"
         height="50px"
       />
 
       <div v-else class="copy-field">
-        <span class="w-7/8 whitespace-nowrap overflow-y-auto">
+        <span v-if="state.hasError">Erro ao carregar a chave de api</span>
+        <span v-else class="w-7/8 whitespace-nowrap overflow-y-auto text-brand-main">
           {{ store.user.currentUser.apiKey }}
         </span>
-        <div class="flex ml-5 w-1/8">
+        <div class="flex ml-5 w-1/8" v-if="!state.hasError">
           <icon
             @click="copyToClipboard(store.user.currentUser.apiKey, 'Chave da API')"
             name="copy"
@@ -34,6 +35,7 @@
             class="cursor-pointer"
           />
           <icon
+            @click="handleRefreshApikey"
             name="loading"
             :color="brandColors.graydark"
             size="24"
@@ -43,18 +45,19 @@
       </div>
 
       <p class="mt-10 text-lg text-gray-800 font-regular">
-        Adicione o script abaixo no seu site para começar a receber feedbacks
+        Adicione este script no seu site para começar a receber feedbacks:
       </p>
 
       <content-loader
         v-if="store.global.isLoading || state.isLoading"
         class="rounded bg-brand-gray"
-        width="600px"
+        width="75%"
         height="168px"
       />
 
       <div v-else class="script-field">
-        <pre class="text-brand-main w-7/8 overflow-x-auto">
+        <span v-if="state.hasError">Erro ao carregar o script</span>
+        <pre v-else class="text-brand-main w-7/8 overflow-x-auto">
 &lt;script
   defer
   async
@@ -62,7 +65,7 @@
   src="{{ state.scriptUrl }}"
 &gt;&lt;/script&gt;</pre>
 
-        <div class="flex ml-5 w-1/8">
+        <div class="flex ml-5 w-1/8" v-if="!state.hasError">
           <icon
             @click="copyScript()"
             name="copy"
@@ -77,7 +80,7 @@
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { reactive, watch } from 'vue'
 import { useToast } from 'vue-toastification'
 
 import HeaderLogged from '../../components/HeaderLogged'
@@ -86,6 +89,8 @@ import ContentLoader from '../../components/ContentLoader'
 import useStore from '../../hooks/useStore'
 import Icon from '../../components/Icon'
 import palette from '../../../palette'
+import services from '../../services'
+import { setApiKey } from '../../store/user'
 
 export default {
   components: { HeaderLogged, PageBanner, Icon, ContentLoader },
@@ -94,7 +99,14 @@ export default {
     const store = useStore()
     const state = reactive({
       scriptUrl: 'https://victoralvesf-feedbacker-widget.netlify.app/init.js',
-      isLoading: false
+      isLoading: false,
+      hasError: false
+    })
+
+    watch(() => store.user.currentUser, () => {
+      if (!store.global.isLoading && !store.user.currentUser.apiKey) {
+        handleError(true)
+      }
     })
 
     async function copyScript () {
@@ -104,6 +116,7 @@ export default {
     }
 
     async function copyToClipboard (text, name) {
+      toast.clear()
       try {
         await navigator.clipboard.writeText(text)
 
@@ -113,12 +126,33 @@ export default {
       }
     }
 
+    function handleError (error) {
+      state.isLoading = false
+      state.hasError = !!error
+    }
+
+    async function handleRefreshApikey () {
+      try {
+        toast.clear()
+        state.isLoading = true
+
+        const { data } = await services.user.generateApiKey()
+        setApiKey(data.apiKey)
+
+        toast.success('Nova chave de api gerada com sucesso!')
+        state.isLoading = false
+      } catch (error) {
+        handleError(error)
+      }
+    }
+
     return {
       store,
       state,
       brandColors: palette.brand,
       copyToClipboard,
-      copyScript
+      copyScript,
+      handleRefreshApikey
     }
   }
 }
