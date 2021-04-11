@@ -7,10 +7,10 @@
 
   <div class="flex justify-center w-full h-full">
     <div class="flex flex-col w-4/5 max-w-6xl py-10">
-      <h3 class="text-3xl text-black text-brand-darkgray">
+      <h3 class="text-3xl font-medium text-gray-600">
         Instalação e configuração
       </h3>
-      <p class="mt-10 text-lg text-gray-800 font-regular">
+      <p class="mt-10 text-lg text-gray-600 font-regular">
         Esta é a sua chave de api:
       </p>
 
@@ -22,7 +22,7 @@
       />
 
       <div v-else class="copy-field">
-        <span v-if="state.hasError">Erro ao carregar a chave de api</span>
+        <span v-if="state.hasError" class="text-gray-600">Erro ao carregar a chave de api</span>
         <span v-else class="w-7/8 whitespace-nowrap overflow-y-auto text-brand-main">
           {{ store.user.currentUser.apiKey }}
         </span>
@@ -44,7 +44,7 @@
         </div>
       </div>
 
-      <p class="mt-10 text-lg text-gray-800 font-regular">
+      <p class="mt-10 text-lg text-gray-600 font-regular">
         Adicione este script no seu site para começar a receber feedbacks:
       </p>
 
@@ -53,10 +53,11 @@
         class="rounded bg-brand-gray"
         width="75%"
         height="130px"
+        animation-duration="2.5s"
       />
 
       <div v-else class="script-field">
-        <span v-if="state.hasError">Erro ao carregar o script</span>
+        <span v-if="state.hasError" class="text-gray-600">Erro ao carregar o script</span>
         <pre v-else class="text-brand-main w-7/8 overflow-x-auto">
 &lt;script defer async
   onload="init('{{ store.user.currentUser.apiKey }}')"
