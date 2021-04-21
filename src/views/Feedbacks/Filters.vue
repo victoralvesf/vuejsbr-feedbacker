@@ -2,15 +2,18 @@
   <div class="flex flex-col animate__animated animate__fadeIn animate__faster">
     <h4 class="text-2xl font-regular text-gray-500 mt-6">Filtros</h4>
 
-    <div
-      v-if="store.isLoading || state.isLoading"
-      class="mt-3"
+    <content-loader
+      v-if="state.isLoading"
+      class="mt-3 flex flex-col rounded px-2"
+      width="100%"
+      height="150px"
+      animation-duration="unset"
     >
       <content-loader width="100%" height="28px" class="rounded-sm" animation-duration="2s" />
       <content-loader width="100%" height="28px" class="rounded-sm" animation-duration="2.4s" />
       <content-loader width="100%" height="28px" class="rounded-sm" animation-duration="2.8s" />
       <content-loader width="100%" height="28px" class="rounded-sm" animation-duration="3s" />
-    </div>
+    </content-loader>
 
     <ul v-else class="flex flex-col mt-3 list-none">
       <li
@@ -19,7 +22,7 @@
         :class="{
           'bg-gray-200': typeIsActive(filter),
         }"
-        @click="handleSelect(filter)"
+        @click="() => handleSelect(filter)"
         class="flex mb-1 items-center justify-between px-4 py-1 rounded cursor-pointer"
       >
         <div class="flex items-center text-gray-600">
@@ -74,7 +77,7 @@ function applyFilters (summary) {
 
 export default {
   components: { ContentLoader },
-  setup () {
+  setup (_, { emit }) {
     const store = useStore('global')
     const state = reactive({
       hasError: false,
@@ -112,6 +115,9 @@ export default {
       }
 
       state.currentType = type
+
+      const emitedType = type === 'all' ? '' : type
+      emit('select', emitedType)
     }
 
     return {

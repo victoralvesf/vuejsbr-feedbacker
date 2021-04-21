@@ -11,19 +11,19 @@
     </div>
     <content-loader
       class="mt-3 rounded"
-      width="100%"
+      width="96%"
       height="28px"
       animation-duration="1.7s"
     />
     <content-loader
       class="mt-3 rounded"
-      width="60%"
+      width="100%"
       height="28px"
       animation-duration="1.9s"
     />
     <content-loader
-      class="mt-3 rounded"
-      width="70%"
+      class="mt-3 mb-4 rounded"
+      width="75%"
       height="28px"
       animation-duration="2.3s"
     />

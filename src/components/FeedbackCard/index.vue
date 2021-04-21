@@ -105,12 +105,12 @@ export default {
   overflow: hidden;
   transition: max-height 0.6s cubic-bezier(1, 0, 1, 0);
   height: auto;
-  max-height: 9999px;
+  max-height: 999px;
   @apply flex flex-col md:flex-row md:flex-wrap items-center justify-between;
 }
 .feedback-bottom.collapsed {
   max-height: 0;
-  transition: max-height 0.7s cubic-bezier(0, 1, 0, 1);
+  transition: max-height 0.7s ease;
 }
 
 .feedback-bottom--item {
@@ -127,7 +127,7 @@ export default {
 
 .chevron-icon {
   transform: rotate(0deg);
-  transition: transform 0.4s ease 0.2s;
+  transition: transform 0.5s ease-in-out 0.2s;
 }
 
 .chevron-icon.active {
