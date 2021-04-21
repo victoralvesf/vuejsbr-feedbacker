@@ -1,6 +1,6 @@
-const emptyMessage = '* Campo obrigatório'
-const lengthMessage = (amount) => `* Campo precisa de no mínimo ${amount} caracteres`
-const invalidEmailMessage = '* Campo precisa ser um e-mail válido'
+export const emptyMessage = '* Campo obrigatório'
+export const lengthMessage = (amount) => `* Campo precisa de no mínimo ${amount} caracteres`
+export const invalidEmailMessage = '* Campo precisa ser um e-mail válido'
 
 export function validateEmpty (value) {
   if (!value) return emptyMessage
@@ -19,7 +19,7 @@ export function validateEmptyAndLength3 (value) {
 export function validateEmailAndNotEmpty (value) {
   if (!value) return emptyMessage
 
-  const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+  const isValid = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i.test(value)
 
   if (!isValid) return invalidEmailMessage
 
