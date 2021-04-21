@@ -9,6 +9,7 @@ import { useRoute, useRouter } from 'vue-router'
 import ModalFactory from './components/ModalFactory'
 import services from './services'
 import { setCurrentUser } from './store/user'
+import { setGlobalError } from './store/global'
 
 export default {
   components: { ModalFactory },
@@ -25,8 +26,12 @@ export default {
           return
         }
 
-        const { data } = await services.user.getMe()
-        setCurrentUser(data)
+        try {
+          const { data } = await services.user.getMe()
+          setCurrentUser(data)
+        } catch (error) {
+          setGlobalError(true)
+        }
       }
     })
   }

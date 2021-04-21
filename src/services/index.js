@@ -2,7 +2,7 @@ import axios from 'axios'
 import authService from './auth'
 import userService from './user'
 import feedbackService from './feedback'
-import { setGlobalLoading } from '../store/global'
+import { setGlobalLoading, setGlobalError } from '../store/global'
 import router from '../router'
 
 const API_ENVS = {
@@ -34,6 +34,7 @@ httpClient.interceptors.response.use((response) => {
 
   if (canThrowAnError) {
     setGlobalLoading(false)
+    setGlobalError(true)
     throw new Error(error.message)
   }
 
@@ -42,6 +43,7 @@ httpClient.interceptors.response.use((response) => {
   }
 
   setGlobalLoading(false)
+  setGlobalError(true)
   return error
 })
 

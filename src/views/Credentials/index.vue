@@ -22,11 +22,11 @@
       />
 
       <div v-else class="copy-field">
-        <span v-if="state.hasError" class="text-gray-600">Erro ao carregar a chave de api</span>
+        <span v-if="state.hasError" class="text-red-400">Erro ao carregar a chave de api</span>
         <span v-else class="w-7/8 whitespace-nowrap overflow-y-auto text-brand-main">
           {{ store.user.currentUser.apiKey }}
         </span>
-        <div class="flex ml-5 w-1/8" v-if="!state.hasError">
+        <div class="flex ml-5 w-1/8" v-show="!state.hasError">
           <icon
             @click="copyToClipboard(store.user.currentUser.apiKey, 'Chave da API')"
             name="copy"
@@ -57,14 +57,14 @@
       />
 
       <div v-else class="script-field">
-        <span v-if="state.hasError" class="text-gray-600">Erro ao carregar o script</span>
+        <span v-if="state.hasError" class="text-red-400">Erro ao carregar o script</span>
         <pre v-else class="text-brand-main w-7/8 overflow-x-auto">
 &lt;script defer async
   onload="init('{{ store.user.currentUser.apiKey }}')"
   src="{{ state.scriptUrl }}"
 &gt;&lt;/script&gt;</pre>
 
-        <div class="flex ml-5 w-1/8" v-if="!state.hasError">
+        <div class="flex ml-5 w-1/8" v-show="!state.hasError">
           <icon
             @click="copyScript()"
             name="copy"
@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import { reactive, watch } from 'vue'
+import { onMounted, reactive, watch } from 'vue'
 import { useToast } from 'vue-toastification'
 
 import HeaderLogged from '../../components/HeaderLogged'
@@ -105,6 +105,14 @@ export default {
     watch(() => store.user.currentUser, () => {
       if (!store.global.isLoading && !store.user.currentUser.apiKey) {
         handleError(true)
+      }
+    })
+
+    onMounted(() => {
+      const { hasError } = store.global
+
+      if (hasError) {
+        state.hasError = hasError
       }
     })
 

@@ -126,6 +126,7 @@ export default {
 
       try {
         state.isLoadingFeedbacks = true
+        state.feedbacks = []
         state.pagination.limit = 5
         state.pagination.offset = 0
         state.pagination.total = 0
