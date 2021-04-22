@@ -5,7 +5,9 @@ node_modules
 /tests/e2e/videos/
 /tests/e2e/screenshots/
 
+# Jest
 **/__snapshots__/*.snap
+/coverage
 
 # local env files
 .env.local
