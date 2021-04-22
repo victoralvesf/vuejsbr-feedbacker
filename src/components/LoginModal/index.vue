@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col" id="modal-login">
     <div class="flex justify-between">
       <h2 class="text-3xl font-medium text-gray-800">Entre na sua conta</h2>
       <button @click="close" class="close-button">
@@ -12,6 +12,7 @@
         <label class="block">
           <span class="text-lg font-medium text-gray-800">E-mail</span>
           <input
+            id="login-email"
             type="email"
             :class="{
               'border-brand-danger': !!state.email.errorMessage
@@ -20,7 +21,11 @@
             placeholder="john.doe@mail.com"
             v-model="state.email.value"
           />
-          <span v-if="!!state.email.errorMessage" class="block font-medium text-brand-danger">
+          <span
+            id="email-error"
+            v-if="!!state.email.errorMessage"
+            class="block font-medium text-brand-danger"
+          >
             {{ state.email.errorMessage }}
           </span>
         </label>
@@ -28,6 +33,7 @@
         <label class="block mt-8">
           <span class="text-lg font-medium text-gray-800">Senha</span>
           <input
+            id="login-password"
             type="password"
             :class="{
               'border-brand-danger': !!state.password.errorMessage
@@ -35,12 +41,17 @@
             class="block w-full px-4 py-3 mt-1 text-large bg-gray-100 border-2 border-transparent rounded"
             v-model="state.password.value"
           />
-          <span v-if="!!state.password.errorMessage" class="block font-medium text-brand-danger">
+          <span
+            id="password-error"
+            v-if="!!state.password.errorMessage"
+            class="block font-medium text-brand-danger"
+          >
             {{ state.password.errorMessage }}
           </span>
         </label>
 
         <button
+          id="login-button"
           :disabled="state.isLoading"
           type="submit"
           :class="{

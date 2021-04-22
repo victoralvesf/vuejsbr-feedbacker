@@ -12,6 +12,7 @@
       <div class="flex">
         <ul class="flex list-none">
           <li
+            id="feedbacks-button"
             @click="handleRoute('Feedbacks')"
             class="common-option"
             :class="{ 'active-bg': route.name === 'Feedbacks' }"
@@ -19,6 +20,7 @@
             Feedbacks
           </li>
           <li
+            id="credentials-button"
             @click="handleRoute('Credentials')"
             class="common-option"
             :class="{ 'active-bg': route.name === 'Credentials' }"

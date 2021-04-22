@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col" id="modal-create-account">
     <div class="flex justify-between">
       <h2 class="text-3xl font-medium text-gray-800">Crie uma conta</h2>
       <button @click="close" class="close-button">

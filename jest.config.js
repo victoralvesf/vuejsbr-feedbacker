@@ -3,6 +3,9 @@ module.exports = {
   testMatch: [
     '**/*.spec.js'
   ],
+  testPathIgnorePatterns: [
+    '<rootDir>/tests'
+  ],
   transform: {
     '^.+\\.vue$': 'vue-jest'
   }
